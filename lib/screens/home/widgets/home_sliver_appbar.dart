@@ -3,9 +3,25 @@ import 'package:flutter/material.dart';
 import 'package:gdsc_movie_app/constants/gaps.dart';
 import 'package:gdsc_movie_app/constants/sizes.dart';
 import 'package:gdsc_movie_app/screens/profile/profile_screen.dart';
+import 'package:gdsc_movie_app/screens/search/search_screen.dart';
+import 'package:gdsc_movie_app/widgets/common_input_widget.dart';
 
 class HomeSliverAppBar extends StatelessWidget {
   const HomeSliverAppBar({super.key});
+
+  void _onSubmit(
+    BuildContext context, {
+    required String value,
+  }) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => SearchScreen(
+          initValue: value,
+        ),
+      ),
+    );
+}
 
   @override
   Widget build(BuildContext context) {
@@ -24,6 +40,7 @@ class HomeSliverAppBar extends StatelessWidget {
       shadowColor: Theme.of(context).colorScheme.primary,
       flexibleSpace: FlexibleSpaceBar(
         expandedTitleScale: 1,
+        collapseMode: CollapseMode.pin,
         background: Align(
           alignment: Alignment.topCenter,
           child: Padding(
@@ -105,14 +122,8 @@ class HomeSliverAppBar extends StatelessWidget {
                   borderRadius: BorderRadius.circular(Sizes.size20),
                   color: Colors.black54,
                 ),
-                alignment: Alignment.centerLeft,
-                padding: const EdgeInsets.symmetric(horizontal: Sizes.size10),
-                child: const Text(
-                  'search',
-                  style: TextStyle(
-                    fontSize: Sizes.size16,
-                    color: Colors.white,
-                  ),
+                child: CommonInputWidget(
+                  onSubmit: (value) => _onSubmit(context, value: value),
                 ),
               ),
             ),

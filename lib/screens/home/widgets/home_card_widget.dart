@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:gdsc_movie_app/constants/gaps.dart';
 import 'package:gdsc_movie_app/constants/sizes.dart';
+import 'package:gdsc_movie_app/models/tmdb/tmdb_movie_list_model.dart';
 import 'package:gdsc_movie_app/screens/home/widgets/home_movie_card_widget.dart';
 
 class HomeCardWidget extends StatelessWidget {
   final String title;
+  final Future<TMDBMovieListModel?> Function() futureFunction;
 
   const HomeCardWidget({
     super.key,
     required this.title,
+    required this.futureFunction,
   });
   
   @override
@@ -36,15 +39,29 @@ class HomeCardWidget extends StatelessWidget {
           ),
           SizedBox(
             height: 180,
-            child: ListView.separated(
-              scrollDirection: Axis.horizontal,
-              padding: const EdgeInsets.symmetric(horizontal: Sizes.size10),
-              separatorBuilder: (context, index) => Gaps.h10,
-              itemBuilder: (context, index) => HomeMovieCardWidget(
-                title: (index + 1).toString(),
-              ),
-              itemCount: 20,
-            ),
+            child: FutureBuilder(
+              future: futureFunction(),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return ListView.separated(
+                    scrollDirection: Axis.horizontal,
+                    padding: const EdgeInsets.symmetric(horizontal: Sizes.size10),
+                    separatorBuilder: (context, index) => Gaps.h10,
+                    itemBuilder: (context, index) => HomeMovieCardWidget(
+                      title: snapshot.data?.results?[index].originalTitle ?? 'N/A',
+                      image: snapshot.data?.results?[index].posterPath ?? '',
+                    ),
+                    itemCount: snapshot.data?.results?.length ?? 0,
+                  );
+                }
+                return Center(
+                  child: CircularProgressIndicator(
+                    color: Colors.yellow.shade700,
+                  ),
+                );
+              }
+            )
+
           ),
         ],
       )

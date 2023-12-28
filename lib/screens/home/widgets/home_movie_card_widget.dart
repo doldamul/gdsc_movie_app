@@ -1,13 +1,16 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:gdsc_movie_app/constants/api_endpoints.dart';
 import 'package:gdsc_movie_app/constants/sizes.dart';
 
 class HomeMovieCardWidget extends StatelessWidget {
   final String title;
+  final String image;
 
   const HomeMovieCardWidget({
     super.key,
     required this.title,
+    required this.image,
   });
   
   @override
@@ -23,7 +26,7 @@ class HomeMovieCardWidget extends StatelessWidget {
         alignment: Alignment.bottomCenter,
         children: [
           Image.network(
-            'https://img.freepik.com/free-vector/cinema-realistic-poster-with-illuminated-bucket-popcorn-drink-3d-glasses-reel-tickets-blue-background-with-tapes-vector-illustration_1284-77070.jpg',
+            '${ApiEndPoints.tmdbImage500}/$image',
             width: double.infinity, 
             height: double.infinity,
             fit: BoxFit.cover,
@@ -39,7 +42,7 @@ class HomeMovieCardWidget extends StatelessWidget {
                 color: Colors.black.withOpacity(0.5),
                 padding: const EdgeInsets.all(Sizes.size5),
                 child: Text(
-                  'name - $title',
+                  title,
                   style: const TextStyle(
                     color: Colors.white,
                   ),
