@@ -8,7 +8,7 @@ part of 'tmdb_movie_list_model.dart';
 
 TMDBMovieListModel _$TMDBMovieListModelFromJson(Map<String, dynamic> json) =>
     TMDBMovieListModel(
-      page: json['page'] as int?,
+      page: json['page'] as int,
       results: (json['results'] as List<dynamic>?)
           ?.map(
               (e) => TMDBMovieListItemModel.fromJson(e as Map<String, dynamic>))

@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'package:gdsc_movie_app/constants/api_endpoints.dart';
 import 'package:gdsc_movie_app/constants/api_keys.dart';
 import 'package:gdsc_movie_app/enums/tmdb_movie_list_type.dart';
-import 'package:gdsc_movie_app/enums/tmdb_movie_trend_type.dart';
 import 'package:gdsc_movie_app/models/tmdb/tmdb_movie_list_model.dart';
 import 'package:http/http.dart' as http;
 
@@ -29,7 +28,7 @@ class TMDBMovieRepository {
   }
 
   Future<TMDBMovieListModel?> getMovieTrendList({
-    required TMDBMovieTrendType type,
+    required TMDBMovieListType type,
   }) async {
     Map<String, String> headers = {
       'accept': 'application/json',

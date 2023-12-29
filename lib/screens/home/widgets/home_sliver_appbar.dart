@@ -1,5 +1,9 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gdsc_movie_app/bloc/search/search_movies_bloc.dart';
+import 'package:gdsc_movie_app/bloc/search/search_movies_state.dart';
+import 'package:gdsc_movie_app/bloc/search/search_movies_event.dart';
 import 'package:gdsc_movie_app/constants/gaps.dart';
 import 'package:gdsc_movie_app/constants/sizes.dart';
 import 'package:gdsc_movie_app/screens/profile/profile_screen.dart';
@@ -9,6 +13,15 @@ import 'package:gdsc_movie_app/widgets/common_input_widget.dart';
 class HomeSliverAppBar extends StatelessWidget {
   const HomeSliverAppBar({super.key});
 
+  void _onChange(
+    BuildContext context, {
+    required String value,
+  }) {
+    context
+      .read<SearchMoviesBloc>()
+      .add(SearchMoviesOnQueryChangeEvent(query: value));
+  }
+
   void _onSubmit(
     BuildContext context, {
     required String value,
@@ -16,9 +29,7 @@ class HomeSliverAppBar extends StatelessWidget {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => SearchScreen(
-          initValue: value,
-        ),
+        builder: (context) => const SearchScreen(),
       ),
     );
 }
@@ -59,9 +70,7 @@ class HomeSliverAppBar extends StatelessWidget {
                       ),
                     ),
                     IconButton(
-                      onPressed: () {
-                        print('on pressed');
-                      },
+                      onPressed: () {},
                       icon: const Icon(
                         Icons.more_vert_rounded,
                         color: Colors.white,
@@ -122,9 +131,13 @@ class HomeSliverAppBar extends StatelessWidget {
                   borderRadius: BorderRadius.circular(Sizes.size20),
                   color: Colors.black54,
                 ),
-                child: CommonInputWidget(
-                  onSubmit: (value) => _onSubmit(context, value: value),
-                ),
+                child: BlocBuilder<SearchMoviesBloc, SearchMoviesState>(
+                  builder: (context, state) => CommonInputWidget(
+                    value: state.query,
+                    onChange: (value) => _onChange(context, value: value),
+                    onSubmit: (value) => _onSubmit(context, value: value),
+                  ),
+                )
               ),
             ),
           ),

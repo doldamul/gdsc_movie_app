@@ -3,13 +3,15 @@ import 'package:gdsc_movie_app/constants/sizes.dart';
 
 class CommonInputWidget extends StatefulWidget {
   final Function(String)? onSubmit;
-  final String? initValue;
+  final Function(String)? onChange;
+  final String? value;
   final EdgeInsets padding;
 
   const CommonInputWidget({
     super.key,
     this.onSubmit,
-    this.initValue,
+    this.onChange,
+    this.value,
     this.padding = const EdgeInsets.only(left: Sizes.size20),
   });
 
@@ -18,14 +20,22 @@ class CommonInputWidget extends StatefulWidget {
 }
 
 class _CommonInputWidgetState extends State<CommonInputWidget> {
-  late final TextEditingController _controller;
+  late TextEditingController _controller;
   late final FocusNode _focusNode;
 
   @override
   void initState() {
     super.initState();
-    _controller = TextEditingController(text: widget.initValue);
+    _controller = TextEditingController(text: widget.value);
     _focusNode = FocusNode();
+  }
+
+  @override
+  void didUpdateWidget(covariant CommonInputWidget oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.value != widget.value) {
+      _controller.text = widget.value ?? '';
+    }
   }
 
   @override
@@ -53,6 +63,7 @@ class _CommonInputWidgetState extends State<CommonInputWidget> {
       focusNode: _focusNode,
       onTapOutside: (event) => FocusScope.of(context).unfocus(),
       onEditingComplete: _onSubmit,
+      onChanged: widget.onChange,
       textInputAction: TextInputAction.search,
       textAlignVertical: TextAlignVertical.center,
       decoration: InputDecoration(
