@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gdsc_movie_app/screens/home/widgets/home_card_widget.dart';
+import 'package:gdsc_movie_app/screens/home/widgets/home_movie_list_widget.dart';
 import 'package:gdsc_movie_app/screens/home/widgets/home_sliver_appbar.dart';
 import 'package:gdsc_movie_app/enums/tmdb_movie_list_type.dart';
 
@@ -20,22 +20,22 @@ class HomeScreen extends StatelessWidget {
           SliverList(
             delegate: SliverChildListDelegate(
               [
-                const HomeCardWidget(
+                const HomeMovieListWidget(
                   type: TMDBMovieListType.day,
                 ),
-                const HomeCardWidget(
+                const HomeMovieListWidget(
                   type: TMDBMovieListType.week,
                 ),
-                const HomeCardWidget(
+                const HomeMovieListWidget(
                   type: TMDBMovieListType.nowPlaying,
                 ),
-                const HomeCardWidget(
+                const HomeMovieListWidget(
                   type: TMDBMovieListType.popular,
                 ),
-                const HomeCardWidget(
+                const HomeMovieListWidget(
                   type: TMDBMovieListType.topRated,
                 ),
-                const HomeCardWidget(
+                const HomeMovieListWidget(
                   type: TMDBMovieListType.upComing,
                 ),
               ],

@@ -11,10 +11,10 @@ import 'package:gdsc_movie_app/models/tmdb/tmdb_movie_listitem_model.dart';
 import 'package:gdsc_movie_app/screens/home/widgets/home_movie_card_widget.dart';
 import 'package:gdsc_movie_app/widgets/common_loading_widget.dart';
 
-class HomeCardWidget extends StatelessWidget {
+class HomeMovieListWidget extends StatelessWidget {
   final TMDBMovieListType type;
 
-  const HomeCardWidget({
+  const HomeMovieListWidget({
     super.key,
     required this.type,
   });
